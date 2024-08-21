@@ -5,6 +5,8 @@ on:
   pull_request:
     branches:
     - master
+    - stable
+    - v*
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -20,11 +22,9 @@ jobs:
         submodules: true
         fetch-depth: 0
 
-    - uses: pypa/cibuildwheel@v2.19
+    - uses: pypa/cibuildwheel@v2.20
       env:
         PYODIDE_BUILD_EXPORTS: whole_archive
-        CFLAGS: -fexceptions
-        LDFLAGS: -fexceptions
       with:
         package-dir: tests
         only: cp312-pyodide_wasm32
